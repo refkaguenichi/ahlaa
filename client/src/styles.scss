@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+ul{
+    padding: 0;
+    margin: 0;
+}
+li{
+list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #fff
+}
+
+select{
+    cursor: pointer;
+}
+
+// select:focus, input:focus, textarea:focus{
+
+// }
