@@ -15,9 +15,9 @@ app.use(express.json());
 app.use("/api/users", require("./router/user"));
 
 //port
-PORT = process.env.PORT || 6000;
+PORT = process.env.PORT || 4202;
 
 //start the server
 app.listen(PORT, () => {
-  console.log("server is running on port", PORT, "!");
+  console.log("server is running on port", PORT);
 });

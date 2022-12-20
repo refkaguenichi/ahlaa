@@ -1,4 +1,3 @@
-const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
@@ -78,4 +77,72 @@ exports.signin = async(req, res)=>{
   }
 };
 
+
+exports.getAllUsers = async(req, res)=>{
+
+  try {
+    const users = await User.find()
+    res.status(200).send({
+      success: [{ msg: "Users list!" }],
+      users
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+    errors: [{ msg: error.message }],
+    });  
+  }
+};
+
+exports.getOneUser = async(req, res)=>{
+  const {id}=req.params
+  try {
+    const user = await User.findOne({_id:id})
+    res.status(200).send({
+      success: [{ msg: "User found with success" }],
+      user
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+    errors: [{ msg: error.message }],
+    });  
+  }
+};
+
+exports.updateUser = async(req, res)=>{
+  let hashedPassword
+  const {id}=req.params
+  try {
+    if(req.body.password)
+    {
+      hashedPassword = await bcrypt.hashSync(req.body.password, saltRounds);
+    }
+    const user = await User.updateOne({_id:id}, {...req.body, password:hashedPassword})
+    res.status(200).send({
+      success: [{ msg: "User updated with success" }],
+      user
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+    errors: [{ msg: error.message }],
+    });  
+  }
+};
+
+exports.deleteUser = async(req, res)=>{
+  const {id}=req.params
+  try {
+    await User.deleteOne({_id:id})
+    res.status(200).send({
+      success: [{ msg: "User deleted with success" }]
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+    errors: [{ msg: error.message }],
+    });  
+  }
+};
  
