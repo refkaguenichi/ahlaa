@@ -11,5 +11,7 @@ export class UserComponent {
   constructor(private userService: UserService){
 
   }
-
+  onAddUser(){
+    alert('hellllllllllo')
+  }
 }
