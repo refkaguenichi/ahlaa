@@ -4,12 +4,34 @@
     <li *ngFor="let n of arr">{{n}}</li>
 </ul>
 <ng-template #idTemplate>Hello from ng template</ng-template>
-<img src="{{image}}" alt="..." style="width: 100px;"> 
+<img src="{{image}}" alt="..." style="width: 100px;">
 <!-- with property binding -->
 <img [src]="image" alt="..." style="width: 100px;">
 <hr>
 <!-- two way binding -->
 <span class="text-success">{{user.username}}</span>
-<input type="text" [(ngModel)]="user.username" placeholder="username">
+<form [formGroup]="userForm" (ngSubmit)="onAddUser()" class="d-flex flex-column align-items-center" style="gap:15px">
+<input type="text" formControlName="username" placeholder="username">
+<input type="text" formControlName="password" placeholder="password">
+<button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Login</button>
+</form>
 <hr>
-<button (click)="onAddUser()">Save user</button>
+<!-- <input type="text" id="name" name="name" class="form-control"
+      required minlength="4" appForbiddenName="bob"
+      [(ngModel)]="user.username" #username="ngModel">
+
+<div *ngIf="username.invalid && (username.dirty || username.touched)"
+    class="alert">
+
+  <div *ngIf="username.errors?.['required']">
+    Name is required.
+  </div>
+  <div *ngIf="username.errors?.['minlength']">
+    Name must be at least 4 characters long.
+  </div>
+  <div *ngIf="username.errors?.['forbiddenName']">
+    Name cannot be Bob.
+  </div>
+
+</div> -->
+<!-- <button (click)="onAddUser()">Save user</button> -->
