@@ -11,24 +11,25 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent {
-  user: User={_id:"", username:"", password:"", role:""};
-  arr:String[]=['lina', 'ahmed', 'fedi', 'sarah'];
-  isTemplate=true;
-  image='https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80'
-  fruits=FRUITS
-  selectedFruit:Fruit=this.fruits[0]
+  user: User = {username: '', password: '' };
+  arr: String[] = ['lina', 'ahmed', 'fedi', 'sarah'];
+  isTemplate = true;
+  image =
+    'https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80';
+  fruits = FRUITS;
+  selectedFruit: Fruit = this.fruits[0];
   userForm = new FormGroup({
-    _id: new FormControl(''),
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
+      Validators.pattern('^[a-zA-Z]+$'),
       // forbiddenNameValidator(/bob/i), // <-- Here's how you pass in the custom validator.
     ]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
+      Validators.pattern('^[a-zA-Z]+$'),
     ]),
-    role: new FormControl(''),
   });
   constructor(private userService: UserService) {}
 
@@ -37,9 +38,9 @@ export class UserComponent {
   }
   onAddUser() {
     console.warn(this.userForm.value);
-    this.userService.addUser(this.userForm.value);
+      this.userService.addUser(this.userForm.value);
   }
-  selectFruit(fruit:Fruit):void{
-    this.selectedFruit=fruit
+  selectFruit(fruit: Fruit): void {
+    this.selectedFruit = fruit;
   }
 }
