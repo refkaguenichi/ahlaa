@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { UserComponent } from './user/user.component';
+import { MydirectiveDirective } from './mydirective.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UserComponent } from './user/user.component';
     FooterComponent,
     SigninComponent,
     SignupComponent,
-    UserComponent
+    UserComponent,
+    MydirectiveDirective
   ],
   imports: [
     BrowserModule,

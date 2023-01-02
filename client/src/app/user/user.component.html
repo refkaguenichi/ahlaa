@@ -13,3 +13,45 @@
 <input type="text" [(ngModel)]="user.username" placeholder="username">
 <hr>
 <button (click)="onAddUser()">Save user</button>
+<hr>
+<div *ngIf="user" class="username">{{user.username}}</div>
+<hr>
+<div>
+    <select [(ngModel)]="selectedFruit">
+        <option *ngFor="let fruit of fruits;" [value]="fruit.name">{{fruit.name}}</option>
+    </select>
+    <div class="row" [ngSwitch]="selectedFruit">
+        <div *ngSwitchCase="'Kiwi'">Kiwi has been selected</div>
+        <div *ngSwitchCase="'Orange'">Orange has been selected</div>
+        <div *ngSwitchCaseDefault>No fruit selected</div>
+    </div>
+</div>
+
+<hr>
+<h2>Fruits available</h2>
+<ul class="fruits">
+    <li *ngFor="let fruit of fruits" 
+    [class.selected]="fruit===selectedFruit" 
+    (click)="selectFruit(fruit)">
+<span class="badge">{{fruit.id}}</span>{{fruit.name}}</li>
+</ul>
+<div *ngIf="selectedFruit">
+<h2>{{selectedFruit.name || selectedFruit.id}}</h2>
+<div>
+    <span>
+        id:
+    </span>
+    {{selectedFruit.id}}
+</div>
+<div>
+    <label>
+        name:
+        <input placeholder="name" [(ngModel)]="selectedFruit.name">
+    </label>
+</div>
+</div>
+
+
+<hr>
+
+<h1 appMydirective>Hello world!</h1>

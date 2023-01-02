@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Fruit } from '../fruit';
+import { FRUITS } from '../fruit-list';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 
@@ -12,11 +14,15 @@ export class UserComponent {
   arr:String[]=['lina', 'ahmed', 'fedi', 'sarah'];
   isTemplate=true;
   image='https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80'
-
+  fruits=FRUITS
+  selectedFruit:Fruit=this.fruits[0]
   constructor(private userService: UserService){
 
   }
   onAddUser(){
     alert('hellllllllllo')
+  }
+  selectFruit(fruit:Fruit):void{
+    this.selectedFruit=fruit
   }
 }
