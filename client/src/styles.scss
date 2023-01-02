@@ -1,20 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
 html{
     scroll-behavior: smooth;
 }
 
 body{
     height: 100%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
     overflow-y: auto;
     overflow-x: hidden;
     font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
-}
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 
@@ -28,10 +34,10 @@ list-style: none;
 
 a{
     text-decoration: none;
-    color: #fff
+    color: #fff;
 }
 
-select{
+select, button, a{
     cursor: pointer;
 }
 
