@@ -1,0 +1,20 @@
+version: '3' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  angular: # name of the first service
+    hostname: localhost
+    build: client # specify the directory of the Dockerfile
+    ports:
+      - "8181:81" # specify port forewarding
+
+  express: 
+    build: . 
+    links:
+      - database
+    ports:
+      - "4202:4202" 
+  database: 
+    image: mongo 
+    ports:
+      - "27018:27018"
