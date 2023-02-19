@@ -1,29 +1,14 @@
-# Stage 1
-# Create image based on the official Node 12 image from dockerhub
-FROM node:14-alpine as node
-
-# Create a directory where our app will be placed
-RUN mkdir -p /ahlaa/client
-
-# Change directory so that our commands run inside this new directory
-WORKDIR /ahlaa/client
-
-# Copy dependency definitions
-COPY package*.json ./
-
-# Install dependecies
+# stage 1
+FROM node:14.15.5 as node
+WORKDIR /app
+COPY  package*.json ./
 RUN npm install
-
-# Get all the code needed to run the app
 COPY . .
+RUN npm run build --production
 
-# Run the angular in production mode
-RUN npm run build
-
-# Stage 2
-FROM nginx:1.19.2-alpine
-
-# Copy dist content to html nginx folder, config nginx to point in index.html
-COPY --from=node /ahlaa/client/dist /usr/share/nginx/html
-
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf    
+# stage 2
+FROM nginx:alpine
+COPY --from=node /app/dist/client /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 80
