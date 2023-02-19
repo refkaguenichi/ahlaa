@@ -1,54 +1,81 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-
+import { Subject } from 'rxjs';
 
 import {User} from '../models/user.model'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  users: User[] = [];
-  // configUrl:any = 'assets/config.json';
-  // getConfig() {
-  //   return this.http.get<Config>(this.configUrl);
-  // }
+  private users$:Subject<User> = new Subject();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  getUsers(): void {
-    this.users.map((e) => e);
-    console.trace('usersss', this.users);
+  private refreshUsers(){
+    this.http
+    .get<User[]>('/api/users')
+    .subscribe((users:any)=>this.users$.next(users.users));
+    // this.http
+    // .get<any>('/api/users')
+    // .subscribe({
+    //   next: data => {
+    //       console.log('repsonse ', data);
+    //       return data.users
+    //   },
+    //   error: error => {
+    //       console.error('There was an error!', error.message);
+    //   }
+    // });
+  }
+
+  getUsers():Subject<any>{
+    this.refreshUsers()
+    console.log('users', this.users$)
+    return this.users$;
   }
 
   getOneUser(id: string): void {
-    this.users.find((e) => e._id === id);
+    this.http
+    .get<User>(`/api/users/${id}`)
+    .subscribe({
+      next: data => {
+          console.log('repsonse ', data);
+      },
+      error: error => {
+          console.error('There was an error!', error.message);
+      }
+    });
   }
 
-  addUser(user: any): void {
-    console.log('userrrrrrrrrrr', user)
-    // let newUser = {
-    //   ...user,
-    //   _id: user?.username?.charAt(
-    //     Math.floor(Math.random() * user?.username?.length)
-    //   ),
-    // };
-    // console.info('newwwww', newUser);
-    // this.users.push(newUser);
-    // this.getUsers();
+  edit(data:any): any {
     this.http
-      .post<User>('/api/users/signup', user)
+      .put<User>(`/api/users/${data.id}`, data.user)
       .subscribe({
         next: data => {
             console.log('repsonse ', data);
         },
         error: error => {
-            // this.errorMessage = error.message;
             console.error('There was an error!', error.message);
         }
-      });
+      })
+  }
+
+  signup(user: any): any {
+    this.http
+      .post<any>('/api/users/signup', user)
+      .subscribe({
+        next: data => {
+            console.log('repsonse ', data);
+            localStorage.setItem('token', data?.accessToken);
+            this.router.navigate(['/users']);
+        },
+        error: error => {
+            console.error('There was an error!', error.message);
+        }
+      })
+      
       // const headers = {
       //   Authorization: 'Bearer my-token',
       //   'My-Custom-Header': 'foobar',
@@ -59,5 +86,21 @@ export class UserService {
       //   .subscribe((data) => {
       //     this.postId = data.id;
       //   });
+  }
+
+  signin(user: any): any {
+    this.http
+      .post<any>('/api/users/signin', user)
+      .subscribe({
+        next: data => {
+            console.log('repsonse ', data);
+            localStorage.setItem('token', data.accessToken);
+            this.router.navigate(['/users']);
+        },
+        error: error => {
+            console.error('There was an error!', error.message);
+        }
+      })
+    
   }
 }

@@ -29,7 +29,7 @@ exports.signup = async(req, res)=>{
            await newUser.save();
            res.status(200).send({
              success: [{ msg: "Account created successfully!" }],
-             user: { ...newUser, token},
+             accesToken: token,
            });
   } catch (error) {
     console.log(error)
@@ -68,7 +68,7 @@ exports.signin = async(req, res)=>{
     );
     res.status(200).send({
       success: [{ msg: "Login successfully" }],
-      user: { ...findUser, token},
+      accessToken: token,
     });
   } catch (error) {
     res.status(400).send({ errors: [{ msg: "login failed" }] });
