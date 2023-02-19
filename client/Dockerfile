@@ -3,10 +3,10 @@
 FROM node:14-alpine as node
 
 # Create a directory where our app will be placed
-RUN mkdir -p /home/we-settle/Documents/ahlaa/client
+RUN mkdir -p /ahlaa/client
 
 # Change directory so that our commands run inside this new directory
-WORKDIR /home/we-settle/Documents/ahlaa/client
+WORKDIR /ahlaa/client
 
 # Copy dependency definitions
 COPY package*.json ./
@@ -24,6 +24,6 @@ RUN npm run build
 FROM nginx:1.19.2-alpine
 
 # Copy dist content to html nginx folder, config nginx to point in index.html
-COPY --from=node /home/we-settle/Documents/ahlaa/client/dist /usr/share/nginx/html
+COPY --from=node /ahlaa/client/dist /usr/share/nginx/html
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf    

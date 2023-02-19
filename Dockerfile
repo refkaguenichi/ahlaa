@@ -2,19 +2,19 @@
 FROM node:14-alpine
 
 # Create a directory where our app will be placed
-RUN mkdir -p /home/we-settle/Documents/ahlaa
+RUN mkdir -p /ahlaa
 
 # Change directory so that our commands run inside this new directory
-WORKDIR /home/we-settle/Documents/ahlaa
+WORKDIR /ahlaa
 
 # Copy dependency definitions
-COPY package.json /home/we-settle/Documents/ahlaa
+COPY package.json /ahlaa
 
 # Install dependecies
 RUN npm install
 
 # Get all the code needed to run the app
-COPY . /home/we-settle/Documents/ahlaa
+COPY . /ahlaa
 
 # Expose the port the app runs in
 EXPOSE 3000
